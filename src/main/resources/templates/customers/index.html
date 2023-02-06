@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>First SpringWeb Application - Greeting to Users</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+
+<style>
+    table { border: 1px solid #ccc; }
+    td { border: 1px solid #ddd; padding: 5px; }
+    th { font-weight:   bold; padding: 5px; }
+</style>
+<h1>Customers List</h1>
+<p>
+    <a href="/customers">All</a>
+    &nbsp;
+    <a href="/customers/active">Active</a>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td>FirstName</td>
+        <td>LastName</td>
+        <td>c/c</td>
+        <td>&nbsp;</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td style="text-align:right" th:text="${customer.id}"></td>
+        <td th:text="${customer.firstName}"></td>
+        <td th:text="${customer.lastName}"></td>
+        <td th:text="${customer.cc}"></td>
+        <td><a th:href="@{'/customers/' + ${customer.   id}}">View</a></td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
