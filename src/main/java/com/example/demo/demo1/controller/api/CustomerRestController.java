@@ -1,6 +1,8 @@
 package com.example.demo.demo1.controller.api;
 
+import com.example.demo.demo1.dto.CustomerDto;
 import com.example.demo.demo1.entity.Customer;
+import com.example.demo.demo1.mapper.CustomerMapper;
 import com.example.demo.demo1.repository.CustomerRepository;
 import com.example.demo.demo1.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class CustomerRestController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    CustomerMapper customerMapper;
+
     @GetMapping(value = {"/", ""})
     public ResponseEntity<List<Customer>> index(Model model){
         List<Customer> results = (List<Customer>) customerRepository.findAll();
@@ -33,10 +38,10 @@ public class CustomerRestController {
     }
 
     @GetMapping(value = {"/{id}"})
-    public ResponseEntity<Customer> show(@PathVariable("id") long id, Model model){
+    public ResponseEntity<CustomerDto> show(@PathVariable("id") long id, Model model){
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()) {
-            return new ResponseEntity<Customer>(customer.get(), HttpStatus.OK);//httpstatus ok è
+            return new ResponseEntity<CustomerDto>(customerMapper.toDto(customer.get()), HttpStatus.OK);//httpstatus ok è
         }
         else{
             return ResponseEntity.notFound().build();
