@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service("CustomerService")
-public class CustomerService {
+public class CustomerService{
 
     @Autowired
     CustomerRepository customerRepository;

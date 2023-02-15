@@ -21,5 +21,6 @@ public class CustomerDto {
     private boolean active;
     private List<SimpleAddressDto> addresses;
 
+
 }
 

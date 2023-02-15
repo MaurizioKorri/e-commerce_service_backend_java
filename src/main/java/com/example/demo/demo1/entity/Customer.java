@@ -35,6 +35,12 @@ public class Customer {
     private String lastName;
 
     @NotNull
+    private String email;
+
+    @NotNull
+    private String password;
+
+    @NotNull
     private String cc;
 
     @NotNull
