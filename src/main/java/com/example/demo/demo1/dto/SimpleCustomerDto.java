@@ -15,8 +15,8 @@ public class SimpleCustomerDto {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
     private String cc;
-    private boolean active;
 
 }
 

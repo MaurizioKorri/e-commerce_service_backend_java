@@ -1,6 +1,7 @@
 package com.example.demo.demo1.controller.api;
 
 import com.example.demo.demo1.dto.CustomerDto;
+import com.example.demo.demo1.dto.SimpleCustomerDto;
 import com.example.demo.demo1.entity.Customer;
 import com.example.demo.demo1.mapper.CustomerMapper;
 import com.example.demo.demo1.repository.CustomerRepository;
@@ -22,8 +23,6 @@ public class CustomerRestController {
     @Autowired
     CustomerRepository customerRepository;
 
-
-
     @Autowired
     CustomerService customerService;
 
@@ -31,14 +30,14 @@ public class CustomerRestController {
     CustomerMapper customerMapper;
 
     @GetMapping(value = {"/", ""})
-    public ResponseEntity<List<Customer>> index(Model model){
+    public ResponseEntity<List<Customer>> getCustomers(Model model){
         List<Customer> results = (List<Customer>) customerRepository.findAll();
         model.addAttribute("customers", results);
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/{id}"})
-    public ResponseEntity<CustomerDto> show(@PathVariable("id") long id, Model model){
+    /*@GetMapping(value = {"/{id}"})
+    public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") long id, Model model){
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()) {
             return new ResponseEntity<CustomerDto>(customerMapper.toDto(customer.get()), HttpStatus.OK);//httpstatus ok è
@@ -46,19 +45,30 @@ public class CustomerRestController {
         else{
             return ResponseEntity.notFound().build();
         }
+    }*/
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = {"/signup"})
+    public Customer createCustomer(@RequestBody Customer newCustomer){ return customerRepository.save(newCustomer);
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = {"/signin"})
+    public ResponseEntity<SimpleCustomerDto> existsCustomer(@RequestBody Customer formCustomer){
+        Optional<Customer> customer = customerRepository.findByCredentials(formCustomer.getEmail(), formCustomer.getPassword());
 
-    @PostMapping(value = {"/", ""})
-    public Customer create(@RequestBody Customer newCustomer){//prende l'oggetto che gli arriva dalla requestBody e con save
-                                                              // lo scrive sul db, e oltre a ciò lo ritorna (tipo del method Customer)
-                                                              //quindi possiamo controllare che sia andato tutto bene etc.
-        return customerRepository.save(newCustomer);
-        //su postman, il requestbody posso andare a metterglielo in Body (raw, JSON)
+        if(customer.isPresent()){
+            return new ResponseEntity<SimpleCustomerDto>(customerMapper.toDto(customer.get()), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<SimpleCustomerDto>(new SimpleCustomerDto(), HttpStatus.OK);
+            //return ResponseEntity.notFound().build();
+        }
     }
+
 
     @PutMapping(value = {"/{id}"})
-    public Customer update(@PathVariable("id") long id, @RequestBody Customer newCustomer){
+    public Customer updateCustomer(@PathVariable("id") long id, @RequestBody Customer newCustomer){
 
         return customerRepository.findById(id).map(
                 customer -> {
@@ -78,7 +88,7 @@ public class CustomerRestController {
     }
 
     @DeleteMapping(value = {"/{id}"})
-    public void delete(@PathVariable("id") long id) {
+    public void deleteCustomer(@PathVariable("id") long id) {
         customerRepository.deleteById(id);
     }
 

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 @Entity
@@ -30,14 +32,16 @@ public class Product {
     @NotNull
     private Double productPrice;
 
+    private Integer quantity;
+
     private Double productWeight;
+
+
 
 
     @JsonIgnore
     @ManyToMany(mappedBy = "boughtProducts")
     private List<Customer> buyers;
-
-
 
 
 }
