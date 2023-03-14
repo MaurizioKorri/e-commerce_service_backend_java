@@ -36,12 +36,15 @@ public class Product {
 
     private Double productWeight;
 
-
-
-
     @JsonIgnore
     @ManyToMany(mappedBy = "boughtProducts")
     private List<Customer> buyers;
+
+
+/*    @JsonIgnore
+    @ManyToMany(mappedBy = "shoppingCartProducts")
+    private List<Customer> shoppingcartholders;*/
+
 
 
 }

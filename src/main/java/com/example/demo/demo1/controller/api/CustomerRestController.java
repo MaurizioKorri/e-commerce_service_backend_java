@@ -3,6 +3,7 @@ package com.example.demo.demo1.controller.api;
 import com.example.demo.demo1.dto.CustomerDto;
 import com.example.demo.demo1.dto.SimpleCustomerDto;
 import com.example.demo.demo1.entity.Customer;
+import com.example.demo.demo1.entity.Product;
 import com.example.demo.demo1.mapper.CustomerMapper;
 import com.example.demo.demo1.repository.CustomerRepository;
 import com.example.demo.demo1.service.CustomerService;
@@ -54,7 +55,7 @@ public class CustomerRestController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value = {"/signin"})
-    public ResponseEntity<SimpleCustomerDto> existsCustomer(@RequestBody Customer formCustomer){
+    public ResponseEntity<SimpleCustomerDto> getCustomer(@RequestBody Customer formCustomer){
         Optional<Customer> customer = customerRepository.findByCredentials(formCustomer.getEmail(), formCustomer.getPassword());
 
         if(customer.isPresent()){
@@ -64,6 +65,12 @@ public class CustomerRestController {
             return new ResponseEntity<SimpleCustomerDto>(new SimpleCustomerDto(), HttpStatus.OK);
             //return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping(value = {"/{id}/products"})
+    public ResponseEntity<List<Product>> getCustomerProducts(@PathVariable("id") long id){
+        Optional<Customer> customer = customerRepository.findById(id);
+        return new ResponseEntity<List<Product>>(customer.get().getBoughtProducts(), HttpStatus.OK);
     }
 
 
@@ -86,6 +93,9 @@ public class CustomerRestController {
 
 
     }
+
+
+
 
     @DeleteMapping(value = {"/{id}"})
     public void deleteCustomer(@PathVariable("id") long id) {

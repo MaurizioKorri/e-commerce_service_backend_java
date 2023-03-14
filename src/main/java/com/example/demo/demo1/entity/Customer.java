@@ -65,4 +65,15 @@ public class Customer {
 
 
 
+
+    /*@ManyToMany
+    @JoinTable(
+            name = "shoppingcart_products",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+
+    )
+
+    private List<Product> shoppingCartProducts;
+*/
 }

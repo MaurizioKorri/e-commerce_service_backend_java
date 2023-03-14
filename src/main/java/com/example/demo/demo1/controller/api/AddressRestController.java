@@ -1,8 +1,11 @@
 package com.example.demo.demo1.controller.api;
 
+import com.example.demo.demo1.dto.AddressDto;
 import com.example.demo.demo1.entity.Address;
 import com.example.demo.demo1.entity.Customer;
 import com.example.demo.demo1.entity.Product;
+import com.example.demo.demo1.mapper.AddressMapper;
+import com.example.demo.demo1.mapper.CustomerMapper;
 import com.example.demo.demo1.repository.AddressRepository;
 import com.example.demo.demo1.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+
 @RestController
-@RequestMapping("/api/addresses/")
+@RequestMapping("/api/addresses")
 @CrossOrigin(origins = "*")
 
 public class AddressRestController {
@@ -23,13 +29,34 @@ public class AddressRestController {
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    AddressMapper addressMapper;
+
     @GetMapping(value = {"/", ""})
     public ResponseEntity<List<Address>> showAddresses(){
         List<Address> addresses = (List<Address>) addressRepository.findAll();
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/{id}"})
+
+    @PostMapping(value = "/get")
+    public ResponseEntity<List<AddressDto>> getAddresses(@RequestBody Long customer_id){
+        List<Address> addresses = addressRepository.findByCustomerrId(customer_id);
+
+        List<AddressDto> addressesDto = new ArrayList<>();
+
+        for(Address a : addresses){
+            addressesDto.add(addressMapper.toDto(a));
+        }
+
+        return new ResponseEntity<>(addressesDto, HttpStatus.OK);
+    }
+
+
+
+
+
+   /* @GetMapping(value = {"/{id}"})
     public ResponseEntity<Address> show(@PathVariable("id") long id, Model model){
         Optional<Address> address = addressRepository.findById(id);
         if(address.isPresent()) {
@@ -39,6 +66,7 @@ public class AddressRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
 
 
@@ -69,6 +97,6 @@ public class AddressRestController {
     @DeleteMapping(value = {"/{id}"})
     public void delete(@PathVariable("id") long id) {
         addressRepository.deleteById(id);
-    }
+    }*/
 
 }

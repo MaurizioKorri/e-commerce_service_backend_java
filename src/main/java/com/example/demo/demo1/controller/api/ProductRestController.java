@@ -1,8 +1,6 @@
 package com.example.demo.demo1.controller.api;
 
 
-import com.example.demo.demo1.entity.Address;
-import com.example.demo.demo1.entity.Customer;
 import com.example.demo.demo1.entity.Product;
 import com.example.demo.demo1.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
-@RequestMapping("/api/products/")
+@RequestMapping("/api/products")
 @CrossOrigin(origins = "*")
 
 public class ProductRestController {
@@ -40,8 +39,6 @@ public class ProductRestController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
     @PostMapping(value = {"/", ""})
     public Product create(@RequestBody Product newProduct){//prende l'oggetto che gli arriva dalla requestBody e con save
         // lo scrive sul db, e oltre a ciò lo ritorna (tipo del method Customer)
