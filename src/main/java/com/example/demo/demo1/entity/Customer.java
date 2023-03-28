@@ -55,14 +55,14 @@ public class Customer {
     private List<Address> addresses;
 
 
-    @ManyToMany
+ /*   @ManyToMany
     @JoinTable(
             name = "customers_products",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> boughtProducts;
-
+*/
 
 
 

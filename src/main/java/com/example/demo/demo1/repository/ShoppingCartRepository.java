@@ -15,15 +15,20 @@ public interface ShoppingCartRepository extends CrudRepository<ShoppingCart, Lon
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO shoppingcart_products (customer_id, product_id, quantity) VALUES (:customerid, :productid, :qty)", nativeQuery = true)
-    public void saveInShoppingCart(@Param("productid")Long id_product, @Param("customerid")Long id_customer, @Param("qty")Integer quantity);
+    void saveInShoppingCart(@Param("productid")Long id_product, @Param("customerid")Long id_customer, @Param("qty")Integer quantity);
 
 
     @Query(value = "SELECT s from ShoppingCart s WHERE s.customer.id = :customerid")
-    public List<ShoppingCart> findCustomerShoppingCart(@Param("customerid") Long customerId);
+    List<ShoppingCart> findCustomerShoppingCart(@Param("customerid") Long customerId);
 
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE ShoppingCart s SET s.quantity = :newQuantity WHERE s.product.id = :productid")
-    public void updateQuantity(@Param("newQuantity")int newQuantity,@Param("productid") Long shoppingCart);
+    void updateQuantity(@Param("newQuantity")int newQuantity,@Param("productid") Long shoppingCart);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE  FROM shoppingcart_products s WHERE customer_id = :customerid", nativeQuery = true)
+    void removeShoppingCart(@Param("customerid")Long customerId);
 }

@@ -15,6 +15,10 @@ public class CustomerService{
     CustomerRepository customerRepository;
 
 
+
+
+
+
     public List<Customer> getActiveCustomers() {
         return customerRepository.findByComplicatedQuery();
     }

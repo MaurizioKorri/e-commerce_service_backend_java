@@ -67,11 +67,11 @@ public class CustomerRestController {
         }
     }
 
-    @GetMapping(value = {"/{id}/products"})
+    /*@GetMapping(value = {"/{id}/products"})
     public ResponseEntity<List<Product>> getCustomerProducts(@PathVariable("id") long id){
         Optional<Customer> customer = customerRepository.findById(id);
         return new ResponseEntity<List<Product>>(customer.get().getBoughtProducts(), HttpStatus.OK);
-    }
+    }*/
 
 
     @PutMapping(value = {"/{id}"})

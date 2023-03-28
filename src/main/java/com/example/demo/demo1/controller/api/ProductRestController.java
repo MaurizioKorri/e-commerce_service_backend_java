@@ -56,7 +56,7 @@ public class ProductRestController {
                     product.setProductDescr(newProduct.getProductDescr());
                     product.setProductWeight(newProduct.getProductWeight());
                     product.setProductPrice(newProduct.getProductPrice());
-                    product.setBuyers(newProduct.getBuyers());
+                    /*product.setBuyers(newProduct.getBuyers());*/
                     return productRepository.save(product);
                 }
         ).orElseGet(() -> {

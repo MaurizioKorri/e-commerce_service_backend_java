@@ -1,16 +1,14 @@
 package com.example.demo.demo1.controller.api;
-
 import com.example.demo.demo1.dto.ShoppingCartDto;
 import com.example.demo.demo1.entity.ShoppingCart;
-import com.example.demo.demo1.mapper.CustomerMapper;
 import com.example.demo.demo1.mapper.ShoppingCartMapper;
 import com.example.demo.demo1.repository.ShoppingCartRepository;
+import com.example.demo.demo1.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,6 +24,9 @@ public class ShoppingCartController {
     ShoppingCartMapper shoppingCartMapper;
 
 
+    @Autowired
+    ShoppingCartService shoppingCartService;
+
     @GetMapping(value = {"/", ""})
     public ResponseEntity<List<ShoppingCart>> showWholeShoppingCart(){
         List<ShoppingCart> shoppingCart = (List<ShoppingCart>) shoppingCartRepository.findAll();
@@ -35,15 +36,8 @@ public class ShoppingCartController {
 
     @PostMapping(value = "/customer")
     public ResponseEntity<List<ShoppingCartDto>> getCustomerShoppingCart(@RequestBody Long customer_id){
-        List<ShoppingCart> shoppingCartList = shoppingCartRepository.findCustomerShoppingCart(customer_id);
 
-        List<ShoppingCartDto> sclDto = new ArrayList<>();
-
-        for(ShoppingCart sc: shoppingCartList){
-            sclDto.add(shoppingCartMapper.toDto(sc));
-        }
-
-        return new ResponseEntity<>(sclDto, HttpStatus.OK);
+        return new ResponseEntity<>(shoppingCartService.getCustomerShoppingCart(customer_id), HttpStatus.OK);
 
     }
 
@@ -68,5 +62,11 @@ public class ShoppingCartController {
         }
 
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = {"/delete"})
+    public void deleteFromShoppingCart(@RequestBody Long customer_id){
+        shoppingCartService.deleteShoppingCart(customer_id);
     }
 }
