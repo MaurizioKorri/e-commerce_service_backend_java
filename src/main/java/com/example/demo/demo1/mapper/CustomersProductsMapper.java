@@ -1,17 +1,15 @@
 package com.example.demo.demo1.mapper;
 
-import com.example.demo.demo1.dto.CustomersProductsDto;
-import com.example.demo.demo1.dto.ShoppingCartDto;
-import com.example.demo.demo1.entity.CustomersProducts;
-import com.example.demo.demo1.entity.ShoppingCart;
+import com.example.demo.demo1.dto.CustomersProductsItemDto;
+import com.example.demo.demo1.entity.CustomersProductsItem;
 import org.mapstruct.Mapper;
 
 
 @Mapper
 public interface CustomersProductsMapper {
 
-    public CustomersProductsDto toDto(CustomersProducts source);
-    public CustomersProducts toEntity(CustomersProductsDto destination);
+    public CustomersProductsItemDto toDto(CustomersProductsItem source);
+    public CustomersProductsItem toEntity(CustomersProductsItemDto destination);
 
 
 }

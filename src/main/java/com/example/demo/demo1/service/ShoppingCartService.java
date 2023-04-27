@@ -1,8 +1,8 @@
 package com.example.demo.demo1.service;
 
 
-import com.example.demo.demo1.dto.ShoppingCartDto;
-import com.example.demo.demo1.entity.ShoppingCart;
+import com.example.demo.demo1.dto.ShoppingCartProductDto;
+import com.example.demo.demo1.entity.ShoppingCartProduct;
 import com.example.demo.demo1.mapper.ShoppingCartMapper;
 import com.example.demo.demo1.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ public class ShoppingCartService {
     ShoppingCartMapper shoppingCartMapper;
 
 
-    public List<ShoppingCartDto> getCustomerShoppingCart(Long customer_id) {
-        List<ShoppingCart> shoppingCartList = shoppingCartRepository.findCustomerShoppingCart(customer_id);
-        List<ShoppingCartDto> sclDto = new ArrayList<>();
-        for (ShoppingCart sc : shoppingCartList) {
+    public List<ShoppingCartProductDto> getCustomerShoppingCart(Long customer_id) {
+        List<ShoppingCartProduct> shoppingCartProductList = shoppingCartRepository.findCustomerShoppingCart(customer_id);
+        List<ShoppingCartProductDto> sclDto = new ArrayList<>();
+        for (ShoppingCartProduct sc : shoppingCartProductList) {
             sclDto.add(shoppingCartMapper.toDto(sc));
         }
 

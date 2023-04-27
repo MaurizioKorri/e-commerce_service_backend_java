@@ -10,9 +10,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoppingCartDto {
+public class CustomersProductsItemDto {
 
     private Long id;
     private Product product;
     private Integer quantity = 1;
+
 }

@@ -1,8 +1,6 @@
 package com.example.demo.demo1.repository;
 
-import com.example.demo.demo1.dto.ShoppingCartDto;
-import com.example.demo.demo1.entity.CustomersProducts;
-import com.example.demo.demo1.entity.ShoppingCart;
+import com.example.demo.demo1.entity.CustomersProductsItem;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -11,10 +9,10 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface CustomersProductsRepository extends CrudRepository<CustomersProducts, Long> {
+public interface CustomersProductsRepository extends CrudRepository<CustomersProductsItem, Long> {
 
-    @Query(value = "SELECT p from CustomersProducts p WHERE p.customer.id = :customerid")
-    public List<CustomersProducts> findCustomerProducts(@Param("customerid") Long customerId);
+    @Query(value = "SELECT p from CustomersProductsItem p WHERE p.customer.id = :customerid")
+    public List<CustomersProductsItem> findCustomerProducts(@Param("customerid") Long customerId);
 
 
     @Transactional

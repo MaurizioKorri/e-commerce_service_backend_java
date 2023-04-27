@@ -8,14 +8,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name = "shoppingcart_products")
+@Table(name = "customersproducts")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoppingCart {
+public class CustomersProductsItem {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class ShoppingCart {
 
     @NotNull
     private Integer quantity = 1;
-    public ShoppingCart(Product product, Customer customer, Integer quantity) {
+    public CustomersProductsItem(Product product, Customer customer, Integer quantity) {
         this.product = product;
         this.customer = customer;
         this.quantity = quantity;

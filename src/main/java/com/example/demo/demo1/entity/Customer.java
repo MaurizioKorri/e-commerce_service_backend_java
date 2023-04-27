@@ -44,12 +44,10 @@ public class Customer {
 
     @NotNull
     private boolean active;
-
     @Override
     public String toString(){
         return String.join(" ", new String[]{this.id.toString(), "-", this.firstName, this.lastName});
     }
-
 
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses;
@@ -62,11 +60,11 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> boughtProducts;
-*/
 
 
 
-    /*@ManyToMany
+
+    @ManyToMany
     @JoinTable(
             name = "shoppingcart_products",
             joinColumns = @JoinColumn(name = "customer_id"),

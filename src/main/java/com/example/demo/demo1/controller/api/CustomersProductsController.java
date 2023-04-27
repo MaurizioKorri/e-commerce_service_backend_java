@@ -1,10 +1,9 @@
 package com.example.demo.demo1.controller.api;
 
 
-import com.example.demo.demo1.dto.CustomersProductsDto;
-import com.example.demo.demo1.dto.ShoppingCartDto;
-import com.example.demo.demo1.entity.CustomersProducts;
-import com.example.demo.demo1.entity.ShoppingCart;
+import com.example.demo.demo1.dto.CustomersProductsItemDto;
+import com.example.demo.demo1.dto.ShoppingCartProductDto;
+import com.example.demo.demo1.entity.CustomersProductsItem;
 import com.example.demo.demo1.mapper.CustomersProductsMapper;
 import com.example.demo.demo1.repository.CustomersProductsRepository;
 import com.example.demo.demo1.service.ShoppingCartService;
@@ -33,43 +32,43 @@ public class CustomersProductsController {
 
 
     @GetMapping(value = {"/", ""})
-    public ResponseEntity<List<CustomersProductsDto>> getAllCustomersProducts() {
-        List<CustomersProducts> customersProductsList = (List<CustomersProducts>) customersProductsRepository.findAll();
+    public ResponseEntity<List<CustomersProductsItemDto>> getAllCustomersProducts() {
+        List<CustomersProductsItem> customersProductsItemList = (List<CustomersProductsItem>) customersProductsRepository.findAll();
 
-        List<CustomersProductsDto> customersProductsDto = new ArrayList<>();
+        List<CustomersProductsItemDto> customersProductsItemDto = new ArrayList<>();
 
-        for (CustomersProducts products : customersProductsList) {
-            customersProductsDto.add(customersProductsMapper.toDto(products));
+        for (CustomersProductsItem products : customersProductsItemList) {
+            customersProductsItemDto.add(customersProductsMapper.toDto(products));
         }
 
-        return new ResponseEntity<>(customersProductsDto, HttpStatus.OK);
+        return new ResponseEntity<>(customersProductsItemDto, HttpStatus.OK);
     }
 
 
     @PostMapping(value = {"/customer"})
-    public ResponseEntity<List<CustomersProductsDto>> getCustomerProducts(@RequestBody Long customer_id) {
-        List<CustomersProducts> customersProductsList = customersProductsRepository.findCustomerProducts(customer_id);
+    public ResponseEntity<List<CustomersProductsItemDto>> getCustomerProducts(@RequestBody Long customer_id) {
+        List<CustomersProductsItem> customersProductsItemList = customersProductsRepository.findCustomerProducts(customer_id);
 
-        List<CustomersProductsDto> customersProductsDto = new ArrayList<>();
+        List<CustomersProductsItemDto> customersProductsItemDto = new ArrayList<>();
 
-        for (CustomersProducts products : customersProductsList) {
-            customersProductsDto.add(customersProductsMapper.toDto(products));
+        for (CustomersProductsItem products : customersProductsItemList) {
+            customersProductsItemDto.add(customersProductsMapper.toDto(products));
         }
 
-        return new ResponseEntity<>(customersProductsDto, HttpStatus.OK);
+        return new ResponseEntity<>(customersProductsItemDto, HttpStatus.OK);
     }
 
 
     @PostMapping(value = {"/add"})
     public void addCustomerProducts(@RequestBody Long customer_id){
 
-        List<ShoppingCartDto> shoppingCartList = shoppingCartService.getCustomerShoppingCart(customer_id);
+        List<ShoppingCartProductDto> shoppingCartList = shoppingCartService.getCustomerShoppingCart(customer_id);
 
 
 
         //add shoppingCart to CustomersProducts
 
-        for(ShoppingCartDto s : shoppingCartList){
+        for(ShoppingCartProductDto s : shoppingCartList){
             customersProductsRepository.addShoppingCartToCustomersProducts(customer_id, s.getProduct().getId(), s.getQuantity());
         }
 

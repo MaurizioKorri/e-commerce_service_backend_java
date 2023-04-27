@@ -1,7 +1,6 @@
 package com.example.demo.demo1.repository;
 
-import com.example.demo.demo1.dto.ShoppingCartDto;
-import com.example.demo.demo1.entity.ShoppingCart;
+import com.example.demo.demo1.entity.ShoppingCartProduct;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface ShoppingCartRepository extends CrudRepository<ShoppingCart, Long> {
+public interface ShoppingCartRepository extends CrudRepository<ShoppingCartProduct, Long> {
 
     @Modifying
     @Transactional
@@ -18,13 +17,13 @@ public interface ShoppingCartRepository extends CrudRepository<ShoppingCart, Lon
     void saveInShoppingCart(@Param("productid")Long id_product, @Param("customerid")Long id_customer, @Param("qty")Integer quantity);
 
 
-    @Query(value = "SELECT s from ShoppingCart s WHERE s.customer.id = :customerid")
-    List<ShoppingCart> findCustomerShoppingCart(@Param("customerid") Long customerId);
+    @Query(value = "SELECT s from ShoppingCartProduct s WHERE s.customer.id = :customerid")
+    List<ShoppingCartProduct> findCustomerShoppingCart(@Param("customerid") Long customerId);
 
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE ShoppingCart s SET s.quantity = :newQuantity WHERE s.product.id = :productid")
+    @Query(value = "UPDATE ShoppingCartProduct s SET s.quantity = :newQuantity WHERE s.product.id = :productid")
     void updateQuantity(@Param("newQuantity")int newQuantity,@Param("productid") Long shoppingCart);
 
     @Transactional

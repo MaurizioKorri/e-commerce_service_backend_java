@@ -1,9 +1,7 @@
 package com.example.demo.demo1.mapper;
 
 import com.example.demo.demo1.dto.AddressDto;
-import com.example.demo.demo1.dto.ShoppingCartDto;
 import com.example.demo.demo1.entity.Address;
-import com.example.demo.demo1.entity.ShoppingCart;
 import org.mapstruct.Mapper;
 
 @Mapper
